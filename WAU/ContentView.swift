@@ -8,6 +8,7 @@
 import SwiftUI
 import CoreData
 import MapKit
+import CoreLocation
 
 struct ContentView: View {
     
@@ -26,20 +27,22 @@ struct ContentView: View {
     var body: some View {
         TabView() {
             Map(coordinateRegion: $viewModel.region, showsUserLocation: true, userTrackingMode: .constant(.follow))
-                .ignoresSafeArea()
+                .ignoresSafeArea(edges: [.top])
                 .onAppear {
                     viewModel.checkIfLocationServicesIsEnabled()
                 }
-                .tabItem() {
-                    Image(systemName: "map")
-                    Text("Map")
-                }.tag(0)
-            
+                    .tabItem() {
+                        Image(systemName: "map")
+                        Text("지도")
+                    }.tag(0)
             NavigationView {
                 List {
                     ForEach(items) { item in
                         HStack {
+                            Image(systemName: "checkmark.circle")
+                                .foregroundColor(.blue)
                             Text(item.title ?? "")
+                                .padding()
                         }
                     }
                     .onMove(perform: moveItem)
@@ -61,11 +64,10 @@ struct ContentView: View {
                         }
                     }
                 }
-                Text("Select an item")
             }
             .tabItem {
                 Image(systemName: "checkmark.circle.fill")
-                Text("to")
+                Text("체크")
             }.tag(1)
         }
     }
@@ -141,7 +143,7 @@ struct ContentView: View {
                 case .denied:
                     print("denied")
                 case .authorizedAlways, .authorizedWhenInUse:
-                region = MKCoordinateRegion(center: locationManager.location!.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+                 region = MKCoordinateRegion(center: locationManager.location!.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
                 @unknown default:
                     break
             }
@@ -152,5 +154,3 @@ struct ContentView: View {
         }
     }
 }
-
-

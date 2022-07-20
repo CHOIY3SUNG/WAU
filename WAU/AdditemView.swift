@@ -11,6 +11,8 @@ struct AdditemView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.dismiss) private var dismiss
     
+    @State var isParent = false
+    
     @State private var itemTitle = ""
     
     @FetchRequest(sortDescriptors: []) private var item: FetchedResults<Item>
@@ -23,7 +25,7 @@ struct AdditemView: View {
                     saveItem()
                     dismiss()
                 }, label: {
-                    Text("Save Item").frame(minWidth: 0, maxWidth: .infinity)
+                    Text("저장하기").frame(minWidth: 0, maxWidth: .infinity)
                 })
             }
             .navigationTitle("글쓰기")
