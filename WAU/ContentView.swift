@@ -26,11 +26,16 @@ struct ContentView: View {
 
     var body: some View {
         TabView() {
-            Map(coordinateRegion: $viewModel.region, showsUserLocation: true, userTrackingMode: .constant(.follow))
-                .ignoresSafeArea(edges: [.top])
-                .onAppear {
-                    viewModel.checkIfLocationServicesIsEnabled()
+            ZStack {
+                Map(coordinateRegion: $viewModel.region, showsUserLocation: true, userTrackingMode: .constant(.follow))
+                    .ignoresSafeArea(edges: [.top])
+                    .onAppear {
+                        viewModel.checkIfLocationServicesIsEnabled()
+                    }
+                VStack {
+                    Image(systemName: "safari")
                 }
+            }
                     .tabItem() {
                         Image(systemName: "map")
                         Text("지도")
@@ -42,6 +47,7 @@ struct ContentView: View {
                             Image(systemName: "checkmark.circle")
                                 .foregroundColor(.blue)
                             Text(item.title ?? "")
+                                .fontWeight(.medium)
                                 .padding()
                         }
                     }

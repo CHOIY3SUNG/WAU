@@ -28,7 +28,7 @@ struct AdditemView: View {
                     Text("저장하기").frame(minWidth: 0, maxWidth: .infinity)
                 })
             }
-            .navigationTitle("글쓰기")
+            .navigationTitle("할 일 정하기")
         }
     }
     
